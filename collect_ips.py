@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from collections import OrderedDict
 import re
 import os
 
@@ -36,7 +37,7 @@ with open('ip.txt', 'w') as file:
         for element in elements:
             element_text = element.get_text()
             ip_matches = re.findall(ip_pattern, element_text)
-            
+            ip_matches = list(OrderedDict.fromkeys(ip_matches))
             # 如果找到IP地址,则写入文件
             for ip in ip_matches:
                 file.write(ip + '\n')
