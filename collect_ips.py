@@ -4,15 +4,17 @@ import re
 import os
 
 # 目标URL列表
-urls = ['https://api.uouin.com/cloudflare.html', 
+urls = [
+        'https://api.uouin.com/cloudflare.html', 
         'https://ip.164746.xyz'
-        ]
+       ]
 
 # 正则表达式用于匹配IP地址
 ip_pattern = r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 
 # 创建一个文件来存储IP地址
 ip_set = set()
+
 for url in urls:
     # 发送HTTP请求获取网页内容
     response = requests.get(url)        
@@ -30,6 +32,7 @@ for url in urls:
         element_text = element.get_text()
         ip_matches = re.findall(ip_pattern, element_text)
         for ip in ip_matches:
+            print(ip+":"+len(ip_set))
             ip_set.add(ip)
 
 # 检查ip.txt文件是否存在,如果存在则删除它
