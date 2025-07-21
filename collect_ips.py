@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from collections import OrderedDict
 import re
 import os
 
@@ -33,13 +32,17 @@ with open('ip.txt', 'w') as file:
         else:
             elements = soup.find_all('li')
         
+        ip_set = set()
         # 遍历所有元素,查找IP地址
         for element in elements:
             element_text = element.get_text()
             ip_matches = re.findall(ip_pattern, element_text)
-            ip_matches = list(OrderedDict.fromkeys(ip_matches))
-            # 如果找到IP地址,则写入文件
             for ip in ip_matches:
-                file.write(ip + '\n')
+                ip_set.add(ip)
+        
+        ip_set = sorted(ip_set, key=lambda x: (int(x.split('.')[0]), int(x.split('.')[1]), int(x.split('.')[2])))                    
+        # 如果找到IP地址,则写入文件
+        for ip in ip_set:
+            file.write(ip + '\n')
 
 print('IP地址已保存到ip.txt文件中。')
