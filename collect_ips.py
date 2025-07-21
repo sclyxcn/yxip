@@ -32,7 +32,7 @@ for url in urls:
         element_text = element.get_text()
         ip_matches = re.findall(ip_pattern, element_text)
         for ip in ip_matches:
-            print(ip+":"+len(ip_set))
+            print(ip+":"+str(len(ip_set)))
             ip_set.add(ip)
 
 # 检查ip.txt文件是否存在,如果存在则删除它
